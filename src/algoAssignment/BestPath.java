@@ -21,45 +21,54 @@ public class BestPath {
 	public static void main(String[] args) {
 		Node[][] mat = new Node[4][4];
 
-		mat[0][0] = new Node(1, 3);
-		mat[0][1] = new Node(8, 4);
-		mat[0][2] = new Node(3, 8);
-		mat[0][3] = new Node(-1, 4);
-		mat[1][0] = new Node(2, 5);
-		mat[1][1] = new Node(5, 11);
-		mat[1][2] = new Node(3, 1);
-		mat[1][3] = new Node(-1, 2);
-		mat[2][0] = new Node(4, 10);
-		mat[2][1] = new Node(3, 1);
-		mat[2][2] = new Node(1, 4);
-		mat[2][3] = new Node(-1, 8);
-		mat[3][0] = new Node(2, -1);
-		mat[3][1] = new Node(3, -1);
-		mat[3][2] = new Node(5, -1);
-		mat[3][3] = new Node(-1, -1);
+		mat[0][0] = new Node(1, 1);
+		mat[0][1] = new Node(1, 1);
+		
+		mat[0][2] = new Node(1, 1);
+		mat[0][3] = new Node(1, 1);
+		
+		mat[1][0] = new Node(1, 1);
+		mat[1][1] = new Node(1, 1);
+		mat[1][2] = new Node(1, 1);
+		mat[1][3] = new Node(1, 1);
+		
+		mat[2][0] = new Node(1, 1);
+		mat[2][1] = new Node(2, 2);
+		mat[2][2] = new Node(3, 3);
+		mat[2][3] = new Node(1, 1);
+		
+		
+		mat[3][0] = new Node(1, 1);
+		mat[3][1] = new Node(1, 1);
+		mat[3][2] = new Node(1, 1);
+		mat[3][3] = new Node(1, 1);
 
-		BestPath bp = new BestPath(mat, 5);
+		BestPath bp = new BestPath(mat, 60);
 
-		System.out.println(mat[2][1].getSecBestPath());
-		System.out.println("num of cheapest paths: " + bp.getNumOfCheapestPaths());
-		System.out.println("the cheapets price is: " + bp.getCheapestPrice());
-		System.out.println("the paths: " + bp.getAllCheapestPaths());
-		System.out.println("num of optimal paths: " + bp.getNumOfOptimalPaths());
-		System.out.println("the optimal paths: " + bp.getAllOptimalPaths());
-		System.out.println("num of minimum turns: " + bp.printNumOfTurns());
-		System.out.println();
-		System.out.println("num of sec cheapest paths: " + bp.getNumOfCheapestPaths2());
-		System.out.println("the sec cheapets price is: " + bp.getCheapestPrice2());
-		System.out.println("the sec paths: " + bp.getAllCheapestPaths2());
-		System.out.println("num of sec optimal paths: " + bp.getNumOfOptimalPaths2());
-		System.out.println("the sec optimal paths: " + bp.getAllOptimalPaths2());
-		System.out.println("num of sec minimum turns: " + bp.getNumOfTurns2());
-		System.out.println(mat[1][1].getSecBestPath().toString());
-		System.out.println(bp.mat[3][3].getSecBestPath().toString());
-		System.out.println(bp.mat[3][2].getSecBestPath().toString());
-		System.out.println(bp.mat[3][1].getSecBestPath().toString());
-		System.out.println(bp.mat[2][1].getSecBestPath().toString());
-		System.out.println(bp.mat[1][1].getSecBestPath().toString());
+				System.out.println("num of cheapest paths: " + bp.getNumOfCheapestPaths());
+				System.out.println("the cheapets price is: " + bp.getCheapestPrice());
+				System.out.println("the paths: " + bp.getAllCheapestPaths());
+				System.out.println("num of optimal paths: " + bp.getNumOfOptimalPaths());
+				System.out.println("the optimal paths: " + bp.getAllOptimalPaths());
+				System.out.println("num of minimum turns: " + bp.printNumOfTurns());
+				System.out.println();
+				System.out.println("num of sec cheapest paths: " + bp.getNumOfCheapestPaths2());
+				System.out.println("the sec cheapets price is: " + bp.getCheapestPrice2());
+				System.out.println("the sec paths: " + bp.getAllCheapestPaths2());
+				System.out.println("num of sec optimal paths: " + bp.getNumOfOptimalPaths2());
+				System.out.println("the sec optimal paths: " + bp.getAllOptimalPaths2());
+				System.out.println("num of sec minimum turns: " + bp.getNumOfTurns2());
+		
+//		System.out.println(bp.mat[3][3].getSecBestPath());
+//		System.out.println(bp.mat[3][2].getSecBestPath());
+//		System.out.println(bp.mat[3][1].getSecBestPath());
+//		System.out.println(bp.mat[2][1].getSecBestPath());
+//		System.out.println(bp.mat[2][1].getSecPrice());
+
+
+
+
+
 
 
 
@@ -119,310 +128,304 @@ public class BestPath {
 		}
 
 		for (int i = 1; i < rows; i++) {
-			for (int j = 1; j < col; j++) {
+			for (int j = 1; j < col; j++) 
+			{
 				double a = mat[i][j - 1].price + mat[i][j - 1].getx(); // came from left ----> 0
 				double b = mat[i - 1][j].price + mat[i - 1][j].gety();// came from down ------> 1
 
-				if (a < b) // came from down
+				if (a < b) // came from left
 				{
 					mat[i][j].setPrice(a);
 					mat[i][j].setPath(mat[i][j - 1].getPath());
 					mat[i][j].setBestPath(0, mat[i][j - 1]);
 
-					if (mat[i][j - 1].secPrice == mat[i][j - 1].price) // price a == secprice a
+					// price a == secprice a
+					if (mat[i][j - 1].secPrice == mat[i][j - 1].price ) 
 					{
-						if(mat[i][j - 1].secPrice+mat[i][j - 1].getx()< mat[i][j - 1].price+mat[i][j - 1].gety())   // a secprice +x < b price + y  
-						{
-							mat[i][j].secPrice = mat[i][j-1].secPrice + mat[i][j-1].getx();
-							mat[i][j].setSecPath( mat[i][j-1].getSecPath());
-							mat[i][j].setSecBestPath(0,  mat[i][j-1]);
-						}
-						else if(mat[i][j - 1].secPrice+mat[i][j - 1].getx()> mat[i][j - 1].price+mat[i][j - 1].gety())  // a secprice +x > b price + y
-						{
-							mat[i][j].secPrice = mat[i-1][j].price + mat[i-1][j].gety();
-							mat[i][j].setSecPath( mat[i-1][j].getPath());
-							mat[i][j].setSecBestPath(1, mat[i-1][j]);
-						} 
-
-						else // price a == secprice a &&
-						{ 
-							System.out.println("hhhhhhhhhhh");
-						}
-
-							// secprice a < b first price
-							if (mat[i][j - 1].secPrice + mat[i][j - 1].getx() < mat[i - 1][j].price+ mat[i - 1][j].gety())
-							{
-								mat[i][j].setSecPrice(mat[i][j - 1].secPrice + mat[i][j - 1].getx());
-								mat[i][j].setSecBestPath(0, mat[i][j - 1]);
-								mat[i][j].setSecPath(mat[i][j - 1].getSecPath());
-							}
-
-							// secprice a > b first price
-							else if(mat[i][j - 1].secPrice + mat[i][j - 1].getx() > mat[i - 1][j].price+ mat[i - 1][j].gety())
-							{
-								mat[i][j].setSecPrice(mat[i - 1][j].price + mat[i - 1][j].gety());
-								mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-								mat[i][j].setSecPath(mat[i - 1][j].getSecPath());
-							}
-
-							else  // secprice a == b first price
-							{
-								mat[i][j].setSecPrice(mat[i - 1][j].price + mat[i - 1][j].gety());
-								mat[i][j].setSecBestPath(0, mat[i][j-1]);
-								mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-								mat[i][j].setSecPath(mat[i - 1][j].getSecPath()+mat[i][j-1].getSecPath());
-							}
-						}
-					}
-
-					else if (a > b) // came from left
-					{
-						mat[i][j].setPrice(b);
-						mat[i][j].setPath(mat[i - 1][j].getPath());
-						mat[i][j].setBestPath(1, mat[i - 1][j]);
-
-						// price b == secprice b
-						if (mat[i - 1][j].secPrice+mat[i - 1][j].gety() == mat[i - 1][j].price+mat[i - 1][j].getx()) 
-						{
-							mat[i][j].secPrice = mat[i][j - 1].price + mat[i][j - 1].getx();
-							mat[i][j].setSecPath(mat[i][j - 1].getSecPath());
-							mat[i][j].setSecBestPath(0, mat[i][j - 1]);
-						}
-
-						else {
-							// a>b secprice
-							if (mat[i - 1][j].secPrice + mat[i - 1][j].gety() < mat[i][j - 1].price	+ mat[i][j - 1].getx()) 
-							{
-								mat[i][j].setSecPrice(mat[i - 1][j].secPrice + mat[i - 1][j].gety());
-								mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-								mat[i][j].setSecPath(mat[i - 1][j].getSecPath());
-							}
-
-							// a < b secprice
-							else if (mat[i - 1][j].secPrice + mat[i - 1][j].gety() > mat[i][j - 1].price + mat[i][j - 1].getx()) 
-							{
-								mat[i][j].setSecPrice(mat[i][j - 1].price + mat[i][j - 1].getx());
-								mat[i][j].setSecBestPath(0, mat[i][j - 1]);
-								mat[i][j].setSecPath(mat[i][j - 1].getSecPath());
-							}
-
-							else  // secprice b == a first price
-							{
-								mat[i][j].setSecPrice(mat[i - 1][j].price + mat[i - 1][j].gety());
-								mat[i][j].setSecBestPath(0, mat[i][j-1]);
-								mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-								mat[i][j].setSecPath(mat[i - 1][j].getSecPath()+mat[i][j-1].getSecPath());
-							}
-
-						}
-
+						// b price + y
+						mat[i][j].secPrice = mat[i-1][j].price + mat[i-1][j].gety();
+						mat[i][j].setSecPath( mat[i-1][j].getPath());
+						mat[i][j].setSecBestPath(0, mat[i][j-1]);
 					} 
 
-					else // a=b equals
+					else  // price a != secprice a
 					{
-						mat[i][j].setPrice(a);
-						mat[i][j].setPath(mat[i][j - 1].getPath() + mat[i - 1][j].getPath());
+						// secprice a+x < b first price+y
 
-						mat[i][j].setBestPath(0, mat[i][j - 1]);
-						mat[i][j].setBestPath(1, mat[i - 1][j]);
-
-						// a secprice < b secprice
-						if (mat[i][j - 1].secPrice + mat[i][j - 1].getx() < mat[i - 1][j].secPrice + mat[i - 1][j].gety()) 
+						if (mat[i][j - 1].secPrice + mat[i][j - 1].getx() < mat[i - 1][j].price+ mat[i - 1][j].gety())
 						{
 							mat[i][j].setSecPrice(mat[i][j - 1].secPrice + mat[i][j - 1].getx());
 							mat[i][j].setSecPath(mat[i][j - 1].getSecPath());
 							mat[i][j].setSecBestPath(0, mat[i][j - 1]);
 						}
 
-						// a secprice >b secprice
-						else if (mat[i][j - 1].secPrice + mat[i][j - 1].getx() > mat[i - 1][j].secPrice	+ mat[i - 1][j].gety())
+						// secprice a +x> b first price+y
+						else if(mat[i][j - 1].secPrice + mat[i][j - 1].getx() > mat[i - 1][j].price+ mat[i - 1][j].gety())
 						{
-							mat[i][j].setSecPrice(mat[i - 1][j].secPrice + mat[i - 1][j].gety());
-							mat[i][j].setSecPath(mat[i - 1][j].getSecPath());
+							mat[i][j].setSecPrice(mat[i - 1][j].price + mat[i - 1][j].gety());
 							mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-
+							mat[i][j].setSecPath(mat[i - 1][j].getSecPath());
+						}
+						else  // secprice a +x == b first price+y
+						{
+							mat[i][j].setSecPrice(mat[i - 1][j].price + mat[i - 1][j].gety());
+							mat[i][j].setSecBestPath(0, mat[i][j-1]);
+							mat[i][j].setSecBestPath(1, mat[i - 1][j]);
+							mat[i][j].setSecPath(mat[i - 1][j].getSecPath()+mat[i][j-1].getSecPath());
 						}
 
-						// a secprice==b secprice
-						else {
-							if (j - 1 == 0 || i - 1 == 0)// its not the first col or row
-							{
-								System.out.println("aaaaaaaaaaaaaaa");
-								System.out.println("i"+i+"     j" +j);
-								mat[i][j].setSecPrice(mat[i - 1][j].secPrice + mat[i - 1][j].gety());
-								mat[i][j].setSecPath(mat[i - 1][j].getSecPath() + mat[i][j - 1].getSecPath());
-								mat[i][j].setSecBestPath(0, mat[i][j - 1]);
-								mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-							}
-							else // its the first row or col
-							{
-								System.out.println("bbbbbbbbb");
+					}
+				}
 
-								mat[i][j].setSecPrice(mat[i - 1][j].secPrice + mat[i - 1][j].gety());
-								mat[i][j].setSecPath(mat[i - 1][j].getSecPath());
-								mat[i][j].setSecBestPath(0, mat[i][j - 1]);
-								mat[i][j].setSecBestPath(1, mat[i - 1][j]);
-							}
-						}
+
+				else if (a > b) // came from down
+				{
+					mat[i][j].setPrice(b);
+					mat[i][j].setPath(mat[i - 1][j].getPath());
+					mat[i][j].setBestPath(1, mat[i - 1][j]);
+
+					// price b == secprice b
+					if (mat[i-1][j].secPrice == mat[i-1][j].price) 
+					{
+						// a price + x
+
+						mat[i][j].secPrice = mat[i][j-1].price + mat[i][j-1].getx();
+						mat[i][j].setSecPath( mat[i][j-1].getPath());
+						mat[i][j].setSecBestPath(1, mat[i-1][j]);
 					}
 
+					else  // price b != secprice b
+					{
+						// secprice b+y < a first price+x
+						if (mat[i-1][j].secPrice + mat[i-1][j].gety() < mat[i][j-1].price+ mat[i][j-1].getx())
+						{
+//							System.out.println("a is "+a+ " i is "+ i + " j is "+j);
+							mat[i][j].setSecPrice(mat[i-1][j].secPrice + mat[i-1][j].gety());
+							mat[i][j].setSecBestPath(1, mat[i-1][j]);
+							mat[i][j].setSecPath(mat[i-1][j].getSecPath());
+						}
+
+						// secprice b +y> b first price+y
+						else if(mat[i][j - 1].price + mat[i][j - 1].getx() < mat[i - 1][j].secPrice+ mat[i - 1][j].gety())
+						{
+							mat[i][j].setSecPrice(mat[i][j-1].price + mat[i][j-1].getx());
+							mat[i][j].setSecBestPath(0, mat[i][j-1]);
+							mat[i][j].setSecPath(mat[i][j-1].getSecPath());
+						}
+						else  // secprice a +x == b first price+y
+						{
+							mat[i][j].setSecPrice(mat[i - 1][j].price + mat[i - 1][j].gety());
+							mat[i][j].setSecBestPath(0, mat[i][j-1]);
+							mat[i][j].setSecBestPath(1, mat[i - 1][j]);
+							mat[i][j].setSecPath(mat[i - 1][j].getSecPath()+mat[i][j-1].getSecPath());
+						}
+					}
+				}
+
+
+			else // a=b equals
+			{
+				mat[i][j].setPrice(a);
+				mat[i][j].setPath(mat[i][j - 1].getPath() + mat[i - 1][j].getPath());
+
+				mat[i][j].setBestPath(0, mat[i][j - 1]);
+				mat[i][j].setBestPath(1, mat[i - 1][j]);
+
+				// a secprice < b secprice
+				if (mat[i][j - 1].secPrice + mat[i][j - 1].getx() < mat[i - 1][j].secPrice + mat[i - 1][j].gety()) 
+				{
+					mat[i][j].setSecPrice(mat[i][j - 1].secPrice + mat[i][j - 1].getx());
+					mat[i][j].setSecPath(mat[i][j - 1].getSecPath());
+					mat[i][j].setSecBestPath(0, mat[i][j - 1]);
+				}
+
+				// a secprice >b secprice
+				else if (mat[i][j - 1].secPrice + mat[i][j - 1].getx() > mat[i - 1][j].secPrice	+ mat[i - 1][j].gety())
+				{
+					mat[i][j].setSecPrice(mat[i - 1][j].secPrice + mat[i - 1][j].gety());
+					mat[i][j].setSecPath(mat[i - 1][j].getSecPath());
+					mat[i][j].setSecBestPath(1, mat[i - 1][j]);
+
+				}
+
+				// a secprice==b secprice
+				else 
+				{
+					mat[i][j].setSecPrice(mat[i][j - 1].secPrice + mat[i][j - 1].getx());
+					mat[i][j].setSecPath(mat[i - 1][j].getSecPath()+mat[i][j-1].getSecPath());
+					mat[i][j].setSecBestPath(0, mat[i][j-1]);
+					mat[i][j].setSecBestPath(1, mat[i - 1][j]);
+
+
+					
+
 				}
 			}
 
 		}
+	}
 
-		public int getNumOfCheapestPaths() {
-			return mat[high - 1][width - 1].getPath();
-		}
+}
 
-		public int getNumOfOptimalPaths() {
-			return optimalPath.size();
-		}
+	
+	
+	
+	
+	
+	
+	
+public int getNumOfCheapestPaths() {
+	return mat[high - 1][width - 1].getPath();
+}
 
-		public double getCheapestPrice() {
-			return mat[high - 1][width - 1].price;
+public int getNumOfOptimalPaths() {
+	return optimalPath.size();
+}
 
-		}
+public double getCheapestPrice() {
+	return mat[high - 1][width - 1].price;
 
-		public int printNumOfTurns() {
-			return minTurns;
-		}
+}
 
-		public ArrayList<String> getAllCheapestPaths() {
-			return this.cheapestPath;
-		}
+public int printNumOfTurns() {
+	return minTurns;
+}
 
-		public ArrayList<String> getAllOptimalPaths() {
-			return this.optimalPath;
-		}
+public ArrayList<String> getAllCheapestPaths() {
+	return this.cheapestPath;
+}
 
-		// --------------------- question 2 -----------------------
+public ArrayList<String> getAllOptimalPaths() {
+	return this.optimalPath;
+}
 
-		public int getNumOfCheapestPaths2() {
+// --------------------- question 2 -----------------------
 
-			return mat[high - 1][width - 1].secPath;
-		}
+public int getNumOfCheapestPaths2() {
 
-		public double getCheapestPrice2() {
-			return mat[high - 1][width - 1].secPrice;
-		}
+	return mat[high - 1][width - 1].secPath;
+}
 
-		public int getNumOfOptimalPaths2() {
-			return this.optimalPath2.size();
-		}
+public double getCheapestPrice2() {
+	return mat[high - 1][width - 1].secPrice;
+}
 
-		public int getNumOfTurns2() {
-			return secMinTurns;
-		}
+public int getNumOfOptimalPaths2() {
+	return this.optimalPath2.size();
+}
 
-		public ArrayList<String> getAllCheapestPaths2() {
-			return this.cheapestPath2;
-		}
+public int getNumOfTurns2() {
+	return secMinTurns;
+}
 
-		public ArrayList<String> getAllOptimalPaths2() {
-			return this.optimalPath2;
-		}
+public ArrayList<String> getAllCheapestPaths2() {
+	return this.cheapestPath2;
+}
 
-		// -------------------- myfunctions --------------------
+public ArrayList<String> getAllOptimalPaths2() {
+	return this.optimalPath2;
+}
 
-		public void calcCheapestPath() {
-			char s[] = new char[high + width - 2];
-			calcCheapestPath(end, s, s.length - 1);
-		}
+// -------------------- myfunctions --------------------
+
+public void calcCheapestPath() {
+	char s[] = new char[high + width - 2];
+	calcCheapestPath(end, s, s.length - 1);
+}
 
 
-		public void calcCheapestPath(Node n, char[] c, int deep)
+public void calcCheapestPath(Node n, char[] c, int deep)
+{
+	if (cheapestPath.size() > teta)
+		return;
+	if (n.getBestPath().isEmpty()) 
+	{
+		String road = new String(c); // the path
+		cheapestPath.add(road); // add the String path to the paths array
+
+		int tmpturns=checkDiffChar(road);
+
+		if(tmpturns==minTurns) 
 		{
-			if (cheapestPath.size() > teta)
-				return;
-			if (n.getBestPath().isEmpty()) 
-			{
-				String road = new String(c); // the path
-				cheapestPath.add(road); // add the String path to the paths array
-
-				int tmpturns=checkDiffChar(road);
-
-				if(tmpturns==minTurns) 
-				{
-					optimalPath.add(road);
-				}
-				if(tmpturns<minTurns) 
-				{
-					optimalPath.clear();
-					minTurns=tmpturns;
-					optimalPath.add(road);
-				}
-
-			}	
-
-			if (n.getBestPath().get(1) != null) 
-			{
-				c[deep] = '1';
-				calcCheapestPath(n.getBestPath().get(1), c, deep - 1);
-			}
-
-			if (n.getBestPath().get(0) != null) 
-			{
-				c[deep] = '0';
-				calcCheapestPath(n.getBestPath().get(0), c, deep - 1);
-			}
-
-
+			optimalPath.add(road);
 		}
-
-		public int checkDiffChar(String s)
+		if(tmpturns<minTurns) 
 		{
-			int count=0;
-			for (int i = 1; i < high+width-2; i++)
-			{
-				if(s.charAt(i-1)!=s.charAt(i)) {
-					count++;
-				}
-			}
-			return count;
+			optimalPath.clear();
+			minTurns=tmpturns;
+			optimalPath.add(road);
 		}
 
+	}	
 
-		public void calcCheapestPath2() {
-			char s[] = new char[high + width - 2];
-			calcCheapestPath2(end, s, s.length - 1);
+	if (n.getBestPath().get(1) != null) 
+	{
+		c[deep] = '1';
+		calcCheapestPath(n.getBestPath().get(1), c, deep - 1);
+	}
+
+	if (n.getBestPath().get(0) != null) 
+	{
+		c[deep] = '0';
+		calcCheapestPath(n.getBestPath().get(0), c, deep - 1);
+	}
+
+
+}
+
+public int checkDiffChar(String s)
+{
+	int count=0;
+	for (int i = 1; i < high+width-2; i++)
+	{
+		if(s.charAt(i-1)!=s.charAt(i)) {
+			count++;
 		}
+	}
+	return count;
+}
 
 
-		public void calcCheapestPath2(Node n, char[] c, int deep)
+public void calcCheapestPath2() {
+	char s[] = new char[high + width - 2];
+	calcCheapestPath2(end, s, s.length - 1);
+}
+
+
+public void calcCheapestPath2(Node n, char[] c, int deep)
+{
+	if (cheapestPath2.size() > teta)
+		return;
+	if (n.getSecBestPath().isEmpty()) 
+	{
+		String road = new String(c); // the path
+		cheapestPath2.add(road); // add the String path to the paths array
+
+		int tmpturns=checkDiffChar(road);
+
+		if(tmpturns==secMinTurns) 
 		{
-			if (cheapestPath2.size() > teta)
-				return;
-			if (n.getSecBestPath().isEmpty()) 
-			{
-				String road = new String(c); // the path
-				cheapestPath2.add(road); // add the String path to the paths array
-
-				int tmpturns=checkDiffChar(road);
-
-				if(tmpturns==secMinTurns) 
-				{
-					optimalPath2.add(road);
-				}
-				if(tmpturns<secMinTurns) 
-				{
-					optimalPath2.clear();
-					secMinTurns=tmpturns;
-					optimalPath2.add(road);
-				}
-
-			}
-			if (n.getSecBestPath().get(0) != null) 
-			{
-				c[deep] = '0';
-				calcCheapestPath2(n.getSecBestPath().get(0), c, deep - 1);
-			}
-
-			if (n.getSecBestPath().get(1) != null) {
-				c[deep] = '1';
-				calcCheapestPath2(n.getSecBestPath().get(1), c, deep - 1);
-			}
+			optimalPath2.add(road);
 		}
-
+		if(tmpturns<secMinTurns) 
+		{
+			optimalPath2.clear();
+			secMinTurns=tmpturns;
+			optimalPath2.add(road);
+		}
 
 	}
+	if (n.getSecBestPath().get(0) != null) 
+	{
+		c[deep] = '0';
+		calcCheapestPath2(n.getSecBestPath().get(0), c, deep - 1);
+	}
+
+	if (n.getSecBestPath().get(1) != null) {
+		c[deep] = '1';
+		calcCheapestPath2(n.getSecBestPath().get(1), c, deep - 1);
+	}
+}
+
+
+}
